@@ -1,14 +1,55 @@
 // import './App.css'
-import { Button } from "@mui/material"
+import { Box, Button } from "@mui/material"
+import { useContext, useEffect, useState } from "react"
+import { AuthContext } from "react-oauth2-code-pkce"
+import { useDispatch } from "react-redux";
 import { BrowserRouter as Router, Navigate, Route, Routes, useLocation } from "react-router"
+import { logout, setCredentials } from "./store/authSlice";
+import ActivityForm from "./components/ActivityForm";
+import ActivityList from "./components/ActivityList";
+
+const ActivitiesPage = () => {
+  return (
+    <Box sx={{ p: 2, border: '1px dashed grey' }}>
+      <ActivityForm />
+      <ActivityList />
+    </Box>
+  );
+}
 
 function App() {
 
+  const { token, tokenData, logIn, logOut, isAuthenticated }
+    = useContext(AuthContext);
+  const dispatch = useDispatch();
+  const [authReady, setAuthReady] = useState(false);
+
+  useEffect(() => {
+    if (token) {
+      dispatch(setCredentials({ token, user: tokenData }));
+      setAuthReady(true);
+    }
+  }, [token, tokenData, dispatch]);
+
   return (
     <Router>
-      <Button variant="contained" color="#dc004e">
-        LOGIN
-      </Button>
+      {!token ? (
+        <Button variant="contained"
+          onClick={() => { logIn(); }}>
+          LOGIN
+        </Button>
+      ) : (
+        <div>
+          <Box component="section" sx={{ p: 2, border: '1px dashed grey' }}>
+            <Button variant="contained" onClick={logout}>
+              LOGOUT
+            </Button>
+            <Routes>
+
+            </Routes>
+          </Box>
+        </div>
+      )}
     </Router>
   )
 }
