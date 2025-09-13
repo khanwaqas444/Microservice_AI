@@ -7,11 +7,12 @@ import { BrowserRouter as Router, Navigate, Route, Routes, useLocation } from "r
 import { logout, setCredentials } from "./store/authSlice";
 import ActivityForm from "./components/ActivityForm";
 import ActivityList from "./components/ActivityList";
+import ActivityDetail from './components/ActivityDetail';
 
 const ActivitiesPage = () => {
   return (
     <Box sx={{ p: 2, border: '1px dashed grey' }}>
-      <ActivityForm />
+      <ActivityForm onActivityAdded = { () => window.location.reload()}/>
       <ActivityList />
     </Box>
   );
@@ -45,7 +46,10 @@ function App() {
               LOGOUT
             </Button>
             <Routes>
-
+              <Route path="/activities" element={<ActivitiesPage />}/>
+              <Route path="/activities/:id" element={<ActivityDetail />}/>
+              <Route path="/" element={token ? <Navigate to="/activities" replace /> :
+                                   <div>Welcome! Please login</div>} />
             </Routes>
           </Box>
         </div>
