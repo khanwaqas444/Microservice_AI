@@ -1,7 +1,9 @@
-import { Box, Typography } from '@mui/material'
+import { Box, Card, CardContent, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import { getActivityDetail } from '../services/api';
+import { Divider } from '@mui/material';
+
 
 const ActivityDetail = () => {
 

@@ -24,7 +24,9 @@ const ActivityList = () => {
     return (
         <Grid container spacing={2}>
             {activities.map((activity) => (
-                <Grid container spacing={{xs: 2, md: 3}} columns={{xs: 4, sm: 8, md: 12}}>
+                <Grid 
+                key={activity.id} 
+                  container spacing={{xs: 2, md: 3}} columns={{xs: 4, sm: 8, md: 12}}>
                     <Card sx={{cursor: 'pointer'}}
                       onClick={() => navigate( `/activities/${activity.id}`)}>
                         <CardContent>
@@ -36,7 +38,7 @@ const ActivityList = () => {
                     </Grid>
             ))}
         </Grid>
-    )
+    );
 }
 
 export default ActivityList
